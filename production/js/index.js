@@ -163,18 +163,20 @@ let default_no_of_completed_tasks = 2;
 function loadMorePendingTasks() {
   /*default_no_of_pending_tasks = default_no_of_pending_tasks + 1000
   fetchPendingTasks()*/
-  $('#populate_tasks li:hidden').show();
-  if ($('#populate_tasks li').length == $('#populate_tasks li:visible').length) {
+  $('.populate_tasks li:hidden').show();
+  if ($('.populate_tasks li').length == $('.populate_tasks li:visible').length) {
     $('#show-more').hide();
+    $("#populate_tasks").removeClass("populate_tasks");
   }
 }
 
 function loadMoreCompletedTasks() {
   /*default_no_of_completed_tasks = default_no_of_completed_tasks + 1000
   fetchCompletedTasks()*/
-  $('#populate_completed_tasks li:hidden').show();
-  if ($('#populate_completed_tasks li').length == $('#populate_completed_tasks li:visible').length) {
+  $('.populate_completed_tasks li:hidden').show();
+  if ($('.populate_completed_tasks li').length == $('.populate_completed_tasks li:visible').length) {
     $('#show-more-1').hide();
+    $("#populate_completed_tasks").removeClass("populate_completed_tasks");
   }
 }
 
@@ -208,6 +210,9 @@ function fetchPendingTasks() {
                 inc++
                 if (inc > 5) {
                   document.getElementById('show-more').style.display = 'block';
+                  if ($('#populate_tasks li').length == $('#populate_tasks li:visible').length) {
+                    $('#show-more').hide();
+                  }
                 }
                 console.log(childSnapshot.val());
                 var child_snap = childSnapshot.val();
@@ -246,15 +251,15 @@ function fetchPendingTasks() {
                                       </div>
                                   </div>
                                   <div class="widget-content-right"> 
-                                    <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${childSnapshot.child('title').val()}','${childSnapshot.child('pending_date').val()}','${childSnapshot.child('description').val()}','${childSnapshot.key}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
+                                    <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
                                     
                                       <button class="btn btn-sm dropdown-toggle" type="button" id="${randomID_dropdown}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v text-dark"></i>
                                       </button>
                                       <div class="dropdown-menu" aria-labelledby="${randomID_dropdown}">
-                                        <button class="dropdown-item btn " data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${childSnapshot.key}','${childSnapshot.val()}')"><i class="far fa-copy" aria-hidden="true"></i> Copy Link</button>
-                                        <button type="button" class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenter" onclick="modalEdit('Edit','${childSnapshot.child('title').val()}','${childSnapshot.child('pending_date').val()}','${childSnapshot.child('description').val()}','${childSnapshot.key}')"><i class="far fa-edit"></i> Edit</button>
-                                        <button class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete','${childSnapshot.child('title').val()}','${childSnapshot.child('pending_date').val()}','${childSnapshot.child('description').val()}','${childSnapshot.key}')"><i class="far fa-trash-alt"></i> Delete</button> 
+                                        <button class="dropdown-item btn " data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${encodeURI(childSnapshot.key)}','${encodeURI(childSnapshot.val())}')"><i class="far fa-copy" aria-hidden="true"></i> Copy Link</button>
+                                        <button type="button" class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenter" onclick="modalEdit('Edit','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-edit"></i> Edit</button>
+                                        <button class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-trash-alt"></i> Delete</button> 
                                         
                                       </div>
                                     
@@ -339,6 +344,9 @@ function fetchCompletedTasks() {
                 inc++
                 if (inc > 2) {
                   document.getElementById('show-more-1').style.display = 'block';
+                  if ($('#populate_completed_tasks li').length == $('#populate_completed_tasks li:visible').length) {
+                    $('#show-more-1').hide();
+                  }
                 }
                 console.log(childSnapshot.val());
                 var child_snap = childSnapshot.val();
@@ -366,7 +374,7 @@ function fetchCompletedTasks() {
                                       </div>
                                   </div>
                                   <div class="widget-content-right"> 
-                                      <button class="border-0 btn-transition btn-sm btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete_Completed','${childSnapshot.child('title').val()}','${childSnapshot.child('pending_date').val()}','${childSnapshot.child('description').val()}','${childSnapshot.key}')"><i class="far fa-trash-alt"></i></button>
+                                      <button class="border-0 btn-transition btn-sm btn btn-outline-danger" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete_Completed','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-trash-alt"></i></button>
 
                                     <!--
                                       <button class="btn btn-sm dropdown-toggle" type="button" id="${randomID_dropdown}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -505,6 +513,12 @@ function timeConverter(UNIX_timestamp){
 }*/
 
 function markCompleted(title, pending_date, description, key) {
+
+  title = decodeURI(title)
+  pending_date = decodeURI(pending_date)
+  description = decodeURI(description)
+  key = decodeURI(key)
+  
   const current_date = Date.now();
 
   var newRef = firebase.database().ref('users').child(firebase.auth().currentUser.uid).child('tasks');
@@ -520,6 +534,10 @@ function markCompleted(title, pending_date, description, key) {
 }
 
 function shareTask(key, snapshot) {
+  
+  snapshot = decodeURI(snapshot)
+  key = decodeURI(key)
+
   var newRef = firebase.database().ref('users').child(firebase.auth().currentUser.uid).child('tasks');
   //var pushRef = firebase.database().ref('users').child(firebase.auth().currentUser.uid).child('tasks').push();
   //var pushKey = pushRef.key;
@@ -553,6 +571,11 @@ const pending_date_time_update = document.getElementById('pending_date_time_upda
 const datetimepicker_update = document.getElementById('datetimepicker_update');
 
 function modalEdit(request, title, pending_date, description, key) {
+
+  title = decodeURI(title)
+  pending_date = decodeURI(pending_date)
+  description = decodeURI(description)
+  key = decodeURI(key)
 
   if (request === "Edit") {
     task_key_update.value = key;

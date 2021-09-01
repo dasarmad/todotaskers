@@ -60,7 +60,7 @@ fetchTasks = function () {
                         </div>
                     </div>
                     <div class="widget-content-right"> 
-                      <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${snapshot.child('title').val()}','${snapshot.child('pending_date').val()}','${snapshot.child('description').val()}','${snapshot.key}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
+                      <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${encodeURI(snapshot.child('title').val())}','${encodeURI(snapshot.child('pending_date').val())}','${encodeURI(snapshot.child('description').val())}','${encodeURI(snapshot.key)}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
@@ -142,6 +142,11 @@ function timeConverter(UNIX_timestamp){
 
 
 function markCompleted(title, pending_date, description, key) {
+  title = decodeURI(title)
+  pending_date = decodeURI(pending_date)
+  description = decodeURI(description)
+  key = decodeURI(key)
+  
     var c_date = Date.now()
     var sar = {uid: key, date: c_date}
 

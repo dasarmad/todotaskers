@@ -379,11 +379,11 @@ body {
 }
 
 
-#populate_tasks li:nth-child(n+6) {
+.populate_tasks li:nth-child(n+6) {
   display: none;
 }
 
-#populate_completed_tasks li:nth-child(n+3) {
+.populate_completed_tasks li:nth-child(n+3) {
   display: none;
 }
 
