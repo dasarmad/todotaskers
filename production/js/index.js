@@ -236,12 +236,12 @@ function fetchPendingTasks() {
                                           <div>`
                                           
                                           if (Date.now() > childSnapshot.child('t_stamp').val()) {
-                                            data += `Expired: ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
+                                            data += `<b>Expired</b> <i>at</i> ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
                                           } else {
-                                            data += `Expiry - ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
+                                            data += `<b>Expiry</b> - ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
                                           }
                                           
-                                          data += `<button class="badge badge-pill badge-info ml-2 btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
+                                          data += `<br><button class="badge badge-pill badge-info  btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
                                           </div>
                                       </div>
                                   </div>
@@ -358,10 +358,10 @@ function fetchCompletedTasks() {
                                       <div class="widget-subheading">
                                           <div>`
                                           
-                                            data += `Completed - ${timeConverter(childSnapshot.child('current_timestamp').val())}`
+                                            data += `<b>Completed</b> - ${timeConverter(childSnapshot.child('current_timestamp').val())}`
                                           
                                           
-                                          data += `<button class="badge badge-pill badge-info ml-2 btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
+                                          data += `<br><button class="badge badge-pill badge-info btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
                                           </div>
                                       </div>
                                   </div>
