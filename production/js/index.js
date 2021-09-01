@@ -236,7 +236,7 @@ function fetchPendingTasks() {
                                           <div>`
                                           
                                           if (Date.now() > childSnapshot.child('t_stamp').val()) {
-                                            data += `Expired`
+                                            data += `Expired: ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
                                           } else {
                                             data += `Expiry - ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
                                           }
