@@ -129,21 +129,33 @@ success_message_update.innerHTML = '';
 
 function pushTask_update(key , title, pending_date, description) {
 
+  firebase.database().ref('users').child(firebase.auth().currentUser.uid).child('tasks').child(key).remove();
+
   const current_date = Date.now();
 
+  var random = makeid(10)
+
+  var a = new Date(pending_date);
+  console.log(a);
+  var t_stamp = a.getTime()
+  var task_deadline = t_stamp+'-'+random;
 
   var newRef = firebase.database().ref('users').child(firebase.auth().currentUser.uid).child('tasks');
-  newRef.child(key).update({
+  newRef.child(task_deadline).update({
     title: title,
     description: description,
     user_id: firebase.auth().currentUser.uid,
-    pending_date: pending_date
+    task_timestamp: task_deadline,
+    pending_date: pending_date,
+    task_status: "Pending",
+    t_stamp: t_stamp
   }).then(() => {
     task_submit_update.innerHTML =   `<button type="submit" class="w-25 btn btn-sm btn-success">Update</button>`
     success_message_update.innerHTML = 'Task updated!';
     error_message_update.innerHTML = '';
     success_message_update.innerHTML = '';
     console.log("Document successfully written!");
+    
   }).catch((error) => {
     error_message_update.innerHTML = error.error_message;
     console.error("Error writing document: ", error);
