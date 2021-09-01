@@ -1,0 +1,392 @@
+.n-001-header {
+  background-color: white;
+}
+
+.nav-link {
+  color: #00cb7f;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.nav-link:hover {
+  color: #018453;
+}
+
+.n-001-logo {
+  font-family: 'Abril Fatface', cursive;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+main {
+  background-color: #ecf0f1;
+  font-family: 'Nunito Sans', sans-serif;
+  min-height: 70vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.stories-header {
+  margin-bottom: 1rem;
+}
+
+
+.btn-success {
+  background-color: #3ac47d;
+  border-color: #3ac47d;
+  color: #fff;
+}
+
+.btn-success:hover {
+  background-color: #30ac6c;
+  border-color: #30ac6c;
+  color: #fff;
+}
+
+.card {
+  border: none;
+}
+
+.card-title {
+  color: #00cb7f;
+  font-size: 18px;
+}
+
+.card-text {
+  color: #2c3e50;
+  font-size: 14px;
+}
+
+.card-creator {
+  color: #00cb7f;
+  font-weight: 700;
+}
+
+footer {
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.c-000 {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 30px;
+}
+
+@media only screen and (max-width: 520px) {
+  #logo {
+    font-family: 'Abril Fatface', cursive;
+    font-size: 20px;
+  }
+}
+
+.footer__copyright-claim {
+  text-align: center;
+}
+
+.footer-col {
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.footer-col-title {
+  color: #00cb7f;
+  margin-bottom: 0;
+}
+
+
+
+
+
+/* New CSS */
+
+body {
+  color: #000;
+  overflow-x: hidden;
+  /*background: linear-gradient(180deg, rgb(0, 203, 127) 250px, #FFF 250px);*/
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: #ecece8;
+  min-height: 100vh; 
+}
+
+.brand-wrapper {
+  margin-bottom: 19px; }
+  .brand-wrapper .logo {
+    height: 37px; }
+
+.login-card {
+  border: 0;
+  border-radius: 15.5px;
+  box-shadow: 0 10px 30px 0 rgba(172, 168, 168, 0.43);
+  overflow: hidden; 
+}
+.login-card-img {
+  border-radius: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /*-o-object-fit: cover;
+  object-fit: cover;*/ 
+}
+
+#description{
+  width: 100%;
+  line-height: 1.2em;
+  
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+#left_div{
+  background-color: #d0d0ce;
+}
+
+.widget-heading{
+  font-size: 1.2rem; 
+}
+
+.widget-subheading {
+  color: #858a8e;
+  font-size: 14px
+}
+
+.card-header{
+  border-bottom: none;
+}
+
+.card-header.card-header-tab .card-header-title {
+  display: flex;
+  align-items: center;
+  white-space: nowrap
+}
+
+.card-header .header-icon {
+  font-size: 1.65rem;
+  margin-right: 0.625rem
+}
+
+.card-header.card-header-tab .card-header-title {
+  display: flex;
+  align-items: center;
+  white-space: nowrap
+}
+
+.btn-actions-pane-right {
+  margin-left: auto;
+  white-space: nowrap
+}
+
+.text-capitalize {
+  text-transform: capitalize !important
+}
+
+.scroll-area-sm {
+  /*height: 288px;
+  overflow-x: hidden*/
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: none;
+}
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0
+}
+
+.todo-indicator {
+  position: absolute;
+  width: 4px;
+  height: 60%;
+  border-radius: 0.3rem;
+  left: 0.625rem;
+  top: 20%;
+  opacity: .6;
+  transition: opacity .2s
+}
+
+
+.widget-content {
+  padding: 1rem;
+  flex-direction: row;
+  align-items: center
+}
+
+.widget-content .widget-content-wrapper {
+  display: flex;
+  flex: 1;
+  position: relative;
+  align-items: center
+}
+
+.widget-content .widget-content-right.widget-content-actions {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s
+}
+
+.widget-content .widget-content-right {
+  margin-left: auto
+}
+
+.btn:not(:disabled):not(.disabled) {
+  cursor: pointer
+}
+
+.btn {
+  position: relative;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s
+}
+
+.btn-outline-success {
+  color: #3ac47d;
+  border-color: #3ac47d
+}
+
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: #3ac47d;
+  border-color: #3ac47d
+}
+
+.btn-outline-success:hover {
+  color: #fff;
+  background-color: #3ac47d;
+  border-color: #3ac47d
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #3f6ad8;
+  border-color: #3f6ad8
+}
+
+.btn {
+  position: relative;
+  transition: color 0.15s, background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+  outline: none !important
+}
+
+.card-footer {
+  background-color: #fff
+}
+
+
+@media only screen and (max-width: 767px) {
+  #task_image {
+    display: none;
+  }
+}
+
+
+
+/* tooltip */
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+/* font size */
+
+@media screen and (min-width: 601px) {
+  body{
+    font-size: 1rem;
+  }
+  .widget-heading {
+    font-size: 1.1rem;
+  }
+  .widget-subheading{
+    font-size: 12px;
+  }
+
+  main {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .list-group-item{
+    padding: 0.75rem 1.25rem;
+  }
+  
+}
+
+
+@media screen and (max-width: 600px) {
+  body{
+    font-size: 0.8rem;
+  }
+  .widget-heading {
+    font-size: 0.9rem;
+  }
+  .widget-subheading{
+    font-size: 0.7rem;
+  }
+
+  main{
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .list-group-item{
+    padding: 0.68rem;
+  }
+
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+
+#populate_tasks li:nth-child(n+6) {
+  display: none;
+}
+
+#populate_completed_tasks li:nth-child(n+3) {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}

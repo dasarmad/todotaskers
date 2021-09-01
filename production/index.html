@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Home - Todo Taskers</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Nunito+Sans:300,400,600,700&amp;display=swap" rel="stylesheet">
+
+  <!-- Place your kit's code here -->
+  <script src="https://kit.fontawesome.com/951ae9444d.js" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="datetime-picker/build/css/bootstrap-datetimepicker.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/8.2.10/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-storage.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+
+  <script src="dist/clipboard.min.js"></script>
+
+</head>
+
+<body style="display: none;">
+<!--
+  <header class="n-001-header" style="display: none;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-3">
+          <div class="n-001-content">
+            <div class="n-001-logo">
+              <picture class="c-000" id="logo">
+                Todo Taskers
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="col-9">
+          <ul class="nav justify-content-end">
+            
+            <li class="nav-item" id="username">
+              <a class="nav-link btn" href="index.html"><i class="far fa-user-circle"></i> todo_username</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn text-danger" href="javascript:void(0)" onclick="doLogout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+-->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content shadow">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title " id="exampleModalLongTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body " id="exampleModalLongBody">
+          <form id="task_form_update" method="post" autocomplete="off">
+            <div>
+              <input type="hidden" id="task_key_update" name="task_key_update" class="form-control form-control-md" placeholder="KEY" required="" disabled>
+              <div class="form-group">
+                <input type="text" id="task_title_update" name="task_title_update" class="form-control form-control-md" placeholder="Title" required="" >
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-control-md" id="datetimepicker_update" placeholder="Pending date" required="" >
+                <small class="text-success" id="pending_date_time_update"></small>
+              
+              </div>
+                    
+              <div class="form-group" id="div_task_description">
+              </div>
+              <div class="form-group">
+                <small class="text-success" id="success_message_update"></small>
+                <small class="text-danger" id="error_message_update"></small>
+              </div>
+              <div id="task_submit_update" align="right" class="form-group">
+                <button type="submit" class="w-25 btn btn-sm btn-success">Update</button>
+              </div>
+              
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal For Delete-->
+  <div class="modal fade" id="exampleModalCenterDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterDelete" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content shadow">
+        <div class="modal-header bg-light border-0">
+          <h5 class="modal-title " id="exampleModalLongTitleDelete"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body " id="exampleModalLongBodyDelete">
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal - Create a new task -->
+  <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-modal="true" >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content shadow">
+        <div class="modal-header bg-light border-0 ">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create a new task</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form id="task_form" method="post" autocomplete="off">
+            <div class="">
+              
+              
+              
+              <div class="form-group">
+                <input type="text" id="task_title" name="task_title" class="form-control form-control-md" placeholder="Title" required="" autofocus="">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control form-control-md" id="datetimepicker" placeholder="Pending date">
+              </div>
+              <div class="form-group">
+                <textarea id="task_description" name="task_description" class="form-control form-control-md" placeholder="Notes just for the creator" rows="4" required=""></textarea>
+              </div>
+              <div class="form-group">
+                <small class="text-success" id="success_message"></small>
+                <small class="text-danger" id="error_message"></small>
+              </div>
+              <div id="task_submit" align="right" class="form-group">
+                <button type="submit" class="w-25 btn btn-sm btn-success">Submit</button>
+              </div>
+              
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <main>
+    <section class="main-content">
+      <div class="container">
+        
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <div class="card-hover-shadow-2x mb-3 table-success shadow-sm rounded p-1">
+                <div class="p-1 w-100 container">
+                  <div class="row">
+                    <div class="col-auto mr-auto card-header-title font-size-lg text-capitalize font-weight-normal align-self-center">
+                      <i class="fa fa-exclamation-circle"></i>&nbsp;to be completed soon
+                    </div>
+                  
+                    <div class="col-auto" style="display: inline-flex;">
+                      <button class="btn btn-sm btn-success" id="show-more" style="display: none;" onclick="loadMorePendingTasks()">Show all</button>
+                      &nbsp;
+                      <button class="btn btn-sm btn-success rounded-circle shadow-sm" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fas fa-plus"></i></button>
+                    </div>
+                  </div> 
+                </div>
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class=" list-group list-group-flush" id="populate_tasks">
+                                  <div class="col-md-12 p-3 text-center">
+                                    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
+                                  </div>
+                                    <!--<li class="list-group-item">
+                                        <div class="todo-indicator bg-warning"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"> <input class="custom-control-input" id="exampleCustomCheckbox12" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox12">&nbsp;</label> </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Call Sam For payments <div class="badge badge-danger ml-2">Rejected</div>
+                                                    </div>
+                                                    <div class="widget-subheading"><i>By Bob</i></div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-focus"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox1" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox1">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Make payment to Bluedart</div>
+                                                    <div class="widget-subheading">
+                                                        <div>By Johnny <div class="badge badge-pill badge-info ml-2">NEW</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-primary"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox4" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox4">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Office rent </div>
+                                                    <div class="widget-subheading">By Samino!</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-info"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox2" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox2">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Office grocery shopping</div>
+                                                    <div class="widget-subheading">By Tida</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-success"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox3" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox3">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Ask for Lunch to Clients</div>
+                                                    <div class="widget-subheading">By Office Admin</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-success"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox10" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox10">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Client Meeting at 11 AM</div>
+                                                    <div class="widget-subheading">By CEO</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-12 col-lg-6">
+            <div class="card-hover-shadow-2x mb-3 table-success shadow-sm rounded p-1">
+                <div class="p-1 container">
+                  <div class="row">
+                    <div class="col-auto mr-auto card-header-title font-size-lg text-capitalize font-weight-normal align-self-center"><i class="fa fa-check-circle text-success"></i>&nbsp;Recently completed</div>
+                    <div class=" col-auto" id="show-more-1" style="display: none;"><button class="btn btn-sm btn-success" onclick="loadMoreCompletedTasks()">Show all</button></div>
+            
+                  </div>
+                    
+                </div>
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class="list-group list-group-flush" id="populate_completed_tasks">
+                                  <div class="col-md-12 p-3 text-center">
+                                    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
+                                  </div>
+                                    <!--<li class="list-group-item">
+                                        <div class="todo-indicator bg-warning"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"> <input class="custom-control-input" id="exampleCustomCheckbox12" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox12">&nbsp;</label> </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Call Sam For payments <div class="badge badge-danger ml-2">Rejected</div>
+                                                    </div>
+                                                    <div class="widget-subheading"><i>By Bob</i></div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-focus"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox1" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox1">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Make payment to Bluedart</div>
+                                                    <div class="widget-subheading">
+                                                        <div>By Johnny <div class="badge badge-pill badge-info ml-2">NEW</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-primary"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox4" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox4">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Office rent </div>
+                                                    <div class="widget-subheading">By Samino!</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-info"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox2" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox2">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">Office grocery shopping</div>
+                                                    <div class="widget-subheading">By Tida</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-success"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox3" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox3">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Ask for Lunch to Clients</div>
+                                                    <div class="widget-subheading">By Office Admin</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="todo-indicator bg-success"></div>
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-2">
+                                                    <div class="custom-checkbox custom-control"><input class="custom-control-input" id="exampleCustomCheckbox10" type="checkbox"><label class="custom-control-label" for="exampleCustomCheckbox10">&nbsp;</label></div>
+                                                </div>
+                                                <div class="widget-content-left flex2">
+                                                    <div class="widget-heading">Client Meeting at 11 AM</div>
+                                                    <div class="widget-subheading">By CEO</div>
+                                                </div>
+                                                <div class="widget-content-right"> <button class="border-0 btn-transition btn btn-outline-success"> <i class="fa fa-check"></i></button> <button class="border-0 btn-transition btn btn-outline-danger"> <i class="fa fa-trash"></i> </button> </div>
+                                            </div>
+                                        </div>
+                                    </li>-->
+                                </ul>
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+              </div>
+          </div>
+          
+        </div>
+      </div>
+      
+    </section>
+  </main>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-3 col-md">
+        <picture class="c-000" id="logo">
+          Todo Taskers
+        </picture>
+        <small class="d-block mb-3 text-muted">&copy; 2021</small>
+      </div>
+      <div class="col-9">
+        <ul class="nav justify-content-end">
+          
+          <li class="nav-item" id="username">
+            <a class="nav-link btn" href="index.html"><i class="far fa-user-circle"></i> todo_username</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn text-danger" href="javascript:void(0)" onclick="doLogout()">Logout</a>
+          </li>
+        </ul>
+      </div>
+      <!--<div class="footer-col col-4 col-md">
+        <p class="footer-col-title">To-do Task</p>
+        <p class="text-muted">Featured | Random | Search | Create</p>
+      </div>
+      <div class="footer-col col-4 col-md">
+        <p class="footer-col-title">About</p>
+        <p class="text-muted">Team | Contact | Privacy | Imprint</p>
+      </div>-->
+    </div>
+  </footer>
+  <div id="extra" style="display: none;">
+    <input type="text" value="Error" id="myInput" style="display: none;">
+    <input class="important-message" id="important-message" type="text" value="Something went wrong" />
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+
+
+  <script type="text/javascript" src="js/index.js"></script>
+  <script src="datetime-picker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#datetimepicker').datetimepicker();
+    });
+    $(function () {
+      $('#datetimepicker_update').datetimepicker();
+    });
+  </script>
+</body>
+
+</html>

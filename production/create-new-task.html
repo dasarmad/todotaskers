@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Create a new task - Todo Taskers</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Nunito+Sans:300,400,600,700&amp;display=swap" rel="stylesheet">
+
+  <!-- Place your kit's code here -->
+  <script src="https://kit.fontawesome.com/951ae9444d.js" crossorigin="anonymous"></script>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="datetime-picker/build/css/bootstrap-datetimepicker.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/8.2.10/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-storage.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+</head>
+
+<body>
+
+  <!--
+  <header class="n-001-header" style="display: none;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-3">
+          <div class="n-001-content">
+            <div class="n-001-logo">
+              <picture class="c-000" id="logo">
+                Todo Taskers
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="col-9">
+          <ul class="nav justify-content-end">
+            
+            <li class="nav-item" id="username">
+              <a class="nav-link btn" href="index.html"><i class="far fa-user-circle"></i> todo_username</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn text-danger" href="javascript:void(0)" onclick="doLogout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+-->
+
+  <main>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-center">
+              <img src="images/undraw_Add_tasks_re.svg" alt="task_image" id="task_image" class="w-100 h-100 ">
+            </div>
+            <!--<h4>My tasks</h4>
+            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+          --><a href="index.html" class="btn btn-success my-3"><i class="fas fa-arrow-left"></i> Back</a>
+          </div>
+          <div class="col-md-6">
+            
+              <div class="card mb-4 shadow-sm">
+                <!--<img class="card-img-top" src="resrc/images/IMG_5744.jpg" alt="A typical day">-->
+                <form id="task_form" method="post">
+                  <div class="card-body ">
+                    <div id="live_time" class="mb-3">
+                      <div class="spinner-grow text-light spinner-border-sm" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                    
+                    <p class="card-title">Create a new task</p>
+                    <div class="form-group">
+                      <input type="text" id="task_title" name="task_title" class="form-control form-control-md"  placeholder="Title" required autofocus>
+                    </div>
+                    <div class="form-group">
+                      <input type='text' class="form-control form-control-md" id='datetimepicker' placeholder="Pending date" />
+                    </div>
+                    <div class="form-group">
+                      <textarea id="task_description" name="task_description" class="form-control form-control-md"  placeholder="Description" rows="4" required  ></textarea>
+                    </div>
+                    <div class="form-group">
+                      <small class="text-success" id="success_message"></small>
+                      <small class="text-danger" id="error_message"></small>
+                    </div>
+                    <div id="task_submit" align="right" class="form-group">
+                      <button type="submit" class="w-25 btn btn-sm btn-success">Submit</button>
+                    </div>
+                    
+                  </div>
+                </form>
+              </div>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+  </main>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-3 col-md">
+        <picture class="c-000" id="logo">
+          Todo Taskers
+        </picture>
+        <small class="d-block mb-3 text-muted">&copy; 2021</small>
+      </div>
+      <div class="col-9">
+        <ul class="nav justify-content-end">
+          
+          <li class="nav-item" id="username">
+            <a class="nav-link btn" href="index.html"><i class="far fa-user-circle"></i> todo_username</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn text-danger" href="javascript:void(0)" onclick="doLogout()">Logout</a>
+          </li>
+        </ul>
+      </div>
+      <!--<div class="footer-col col-4 col-md">
+        <p class="footer-col-title">To-do Task</p>
+        <p class="text-muted">Featured | Random | Search | Create</p>
+      </div>
+      <div class="footer-col col-4 col-md">
+        <p class="footer-col-title">About</p>
+        <p class="text-muted">Team | Contact | Privacy | Imprint</p>
+      </div>-->
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="js/create_task.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js" type="text/javascript"></script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src=" https://code.jquery.com/jquery-3.3.1.slim.min.js " crossorigin="anonymous "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " crossorigin="anonymous "></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " crossorigin="anonymous "></script>
+  <!-- Optional JavaScript -->
+  <script src="datetime-picker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $('#datetimepicker').datetimepicker();
+    });
+  </script>
+
+</body>
+
+</html>

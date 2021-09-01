@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Shared task - Todo Taskers</title>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Abril+Fatface|Nunito+Sans:300,400,600,700&amp;display=swap" rel="stylesheet">
+
+  <!-- Place your kit's code here -->
+  <script src="https://kit.fontawesome.com/951ae9444d.js" crossorigin="anonymous"></script>
+    
+    
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="/__/firebase/8.2.10/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-storage.js"></script>
+
+  <!-- Initialize Firebase -->
+  <script src="/__/firebase/init.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.min.js"></script>
+
+</head>
+
+<body>
+<!--
+  <header class="n-001-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-3">
+          <div class="n-001-content">
+            <div class="n-001-logo">
+              <picture class="c-000" id="logo">
+                Todo Taskers
+              </picture>
+            </div>
+          </div>
+        </div>
+        <div class="col-9">
+          <ul class="nav justify-content-end">
+            
+            <li class="nav-item" id="username">
+              <a class="nav-link btn" href="index.html"><i class="far fa-user-circle"></i> todo_username</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link btn text-danger" href="javascript:void(0)" onclick="doLogout()">Logout</a>
+            </li>
+          </ul>
+        
+        </div>
+      </div>
+  </div></header>
+-->
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="exampleModalLongBody">
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <section class="main-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-6">
+            <div class="card-hover-shadow-2x mb-3 table-success shadow-sm rounded p-1">
+                <div class="p-2">
+                    <div class="card-header-title font-size-lg text-capitalize font-weight-normal"><i class="fas fa-bullhorn"></i>&nbsp;This task is shared</div>
+                </div>
+                <div class="scroll-area-sm">
+                    <perfect-scrollbar class="ps-show-limits">
+                        <div style="position: static;" class="ps ps--active-y">
+                            <div class="ps-content">
+                                <ul class=" list-group list-group-flush" id="populate_tasks">
+                                  <div class="col-md-12 p-3 text-center">
+                                    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+                                      <span class="sr-only">Loading...</span>
+                                    </div>
+                                  </div>
+                                </ul>
+                            </div>
+                        </div>
+                    </perfect-scrollbar>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+  </main>
+
+  <footer class="container py-5">
+    <div class="row">
+      <div class="col-12 col-md">
+        <picture class="c-000" id="logo">
+          Todo Taskers
+        </picture>
+        <small class="d-block mb-3 text-muted">&copy; 2021</small>
+      </div>
+      <!--<div class="footer-col col-4 col-md">
+        <p class="footer-col-title">To-do Task</p>
+        <p class="text-muted">Featured | Random | Search | Create</p>
+      </div>
+      <div class="footer-col col-4 col-md">
+        <p class="footer-col-title">About</p>
+        <p class="text-muted">Team | Contact | Privacy | Imprint</p>
+      </div>-->
+    </div>
+  </footer>
+
+  <script type="text/javascript" src="js/shared-task.js"></script>
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js " crossorigin="anonymous "></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js " crossorigin="anonymous "></script>
+</body>
+
+</html>
