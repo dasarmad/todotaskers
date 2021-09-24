@@ -219,112 +219,116 @@ function fetchPendingTasks() {
             
             snapshot.forEach(function(childSnapshot) {
               if ( childSnapshot.exists()){
-                inc++
-                if (inc > 5) {
-                  document.getElementById('show-more').style.display = 'block';
-                  if ($('#populate_tasks li').length == $('#populate_tasks li:visible').length) {
-                    $('#show-more').hide();
-                  }
-                }
-                console.log(childSnapshot.val());
-                var child_snap = childSnapshot.val();
-                // Your modified getHTML function
-                //const getHTML = message => _.unescape(message).replace('\\', '');
-                var title = childSnapshot.child('title').val().replace(/(<br>|<\/br>|<br \/>)/mgi, "\n");
-                var description = childSnapshot.child('description').val().replace(/(<br>|<\/br>|<br \/>)/mgi, "\n");
-                var random = makeid(10)
-                var randomID_dropdown = makeid(10)
-                data += `<li class="list-group-item m-1 rounded" id="${childSnapshot.key}_li">
-                          <div class="todo-indicator `
-                          
-                          if (Date.now() > childSnapshot.child('t_stamp').val()) {
-                            data += `bg-secondary`
-                          } else {
-                            data += `bg-warning`
-                          }
-                            
-                          data += `"></div>
-                            <div class="widget-content p-0">
-                              <div class="widget-content-wrapper ml-2">
-                                  
-                                  <div class="widget-content-left">
-                                      <div class="widget-heading">${childSnapshot.child('title').val()}</div>
-                                      <div class="widget-subheading">
-                                          <div>`
-                                          
-                                          if (Date.now() > childSnapshot.child('t_stamp').val()) {
-                                            data += `<b>Expired</b> <i>at</i> ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
-                                          } else {
-                                            data += `<b>Expiry</b> - ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
-                                          }
-                                          
-                                          data += `<br><button class="badge badge-pill badge-info  btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
+
+                if (childSnapshot.hasChild('description') && childSnapshot.hasChild('pending_date') && childSnapshot.hasChild('t_stamp')
+                    && childSnapshot.hasChild('task_status') && childSnapshot.hasChild('task_timestamp') && childSnapshot.hasChild('title') 
+                    && childSnapshot.hasChild('user_id')) {
+
+                    inc++
+                    if (inc > 5) {
+                      document.getElementById('show-more').style.display = 'block';
+                      if ($('#populate_tasks li').length == $('#populate_tasks li:visible').length) {
+                        $('#show-more').hide();
+                      }
+                    }
+                    console.log(childSnapshot.val());
+                    var child_snap = childSnapshot.val();
+                    var random = makeid(10)
+                    var randomID_dropdown = makeid(10)
+                    data += `<li class="list-group-item m-1 rounded" id="${childSnapshot.key}_li">
+                              <div class="todo-indicator `
+                              
+                              if (Date.now() > childSnapshot.child('t_stamp').val()) {
+                                data += `bg-secondary`
+                              } else {
+                                data += `bg-warning`
+                              }
+                                
+                              data += `"></div>
+                                <div class="widget-content p-0">
+                                  <div class="widget-content-wrapper ml-2">
+                                      
+                                      <div class="widget-content-left">
+                                          <div class="widget-heading">${childSnapshot.child('title').val()}</div>
+                                          <div class="widget-subheading">
+                                              <div>`
+                                              
+                                              if (Date.now() > childSnapshot.child('t_stamp').val()) {
+                                                data += `<b>Expired</b> <i>at</i> ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
+                                              } else {
+                                                data += `<b>Expiry</b> - ${dateToTimestamp(childSnapshot.child('pending_date').val())}`
+                                              }
+                                              
+                                              data += `<br><button class="badge badge-pill badge-info  btn btn-info" data-toggle="collapse" data-target="#${random}" aria-expanded="false" aria-controls="${random}">VIEW NOTES</button>
+                                              </div>
                                           </div>
                                       </div>
-                                  </div>
-                                  <div class="widget-content-right"> 
-                                    <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
-                                    
-                                      <button class="btn btn-sm dropdown-toggle" type="button" id="${randomID_dropdown}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-ellipsis-v text-dark"></i>
-                                      </button>
-                                      <div class="dropdown-menu" aria-labelledby="${randomID_dropdown}">
-                                        <button class="dropdown-item btn " data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${encodeURI(childSnapshot.key)}','${encodeURI(childSnapshot.val())}')"><i class="far fa-copy" aria-hidden="true"></i> Copy Link</button>
-                                        <button type="button" class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenter" onclick="modalEdit('Edit','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-edit"></i> Edit</button>
-                                        <button class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-trash-alt"></i> Delete</button> 
+                                      <div class="widget-content-right"> 
+                                        <button class="border-0 btn-transition btn-sm btn btn-outline-success" onclick="markCompleted('${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"> <i class="fa fa-check" aria-hidden="true"></i></button>
                                         
-                                      </div>
-                                    
-                                    </div>
+                                          <button class="btn btn-sm dropdown-toggle" type="button" id="${randomID_dropdown}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v text-dark"></i>
+                                          </button>
+                                          <div class="dropdown-menu" aria-labelledby="${randomID_dropdown}">
+                                            <button class="dropdown-item btn " data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${encodeURI(childSnapshot.key)}','${encodeURI(childSnapshot.val())}')"><i class="far fa-copy" aria-hidden="true"></i> Copy Link</button>
+                                            <button type="button" class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenter" onclick="modalEdit('Edit','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-edit"></i> Edit</button>
+                                            <button class="dropdown-item btn" data-toggle="modal" data-target="#exampleModalCenterDelete" onclick="modalEdit('Delete','${encodeURI(childSnapshot.child('title').val())}','${encodeURI(childSnapshot.child('pending_date').val())}','${encodeURI(childSnapshot.child('description').val())}','${encodeURI(childSnapshot.key)}')"><i class="far fa-trash-alt"></i> Delete</button> 
+                                            
+                                          </div>
+                                        
+                                        </div>
+                                  </div>
                               </div>
-                          </div>
-                          <div class="collapse" id="${random}">
-                            <div class="card-body" style=" padding: 1.25rem 1.25rem 1.25rem 0.5rem;">
-                              ${childSnapshot.child('description').val()}
-                            </div>
-                          </div>
-                        </li>`
+                              <div class="collapse" id="${random}">
+                                <div class="card-body" style=" padding: 1.25rem 1.25rem 1.25rem 0.5rem;">
+                                  ${childSnapshot.child('description').val()}
+                                </div>
+                              </div>
+                            </li>`
 
-                content += `<div class="col-md-6 col-lg-4 animated fadeIn">
-                <div class="card mb-4 shadow-sm">
-                  <div class="card-body ">`
+                    content += `<div class="col-md-6 col-lg-4 animated fadeIn">
+                    <div class="card mb-4 shadow-sm">
+                      <div class="card-body ">`
 
-                    if(!childSnapshot.child('task_status').val()){
-                      content+=`<p class="card-text rounded bg-warning text-dark p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold"><i class="fas fa-exclamation-circle"></i> Pending</small></p>`
-                    } else {
-                      content+=`<p class="card-text rounded bg-success text-white p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold"><i class="fas fa-check-circle"></i> Completed</small></p>`
-                    }
+                        if(!childSnapshot.child('task_status').val()){
+                          content+=`<p class="card-text rounded bg-warning text-dark p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold"><i class="fas fa-exclamation-circle"></i> Pending</small></p>`
+                        } else {
+                          content+=`<p class="card-text rounded bg-success text-white p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold"><i class="fas fa-check-circle"></i> Completed</small></p>`
+                        }
 
-                    content+=`<p class="card-text rounded bg-primary text-white p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold">Created at: ${timeConverter(childSnapshot.child('task_timestamp').val())}</small></p>
-                    
-                    <p class="card-title">${childSnapshot.child('title').val()}</p>
-                    <p id="description" class="card-text text-justify">${childSnapshot.child('description').val()}</p>`
+                        content+=`<p class="card-text rounded bg-primary text-white p-1 d-inline-flex shadow-sm mr-1"><small class="tag font-weight-bold">Created at: ${timeConverter(childSnapshot.child('task_timestamp').val())}</small></p>
+                        
+                        <p class="card-title">${childSnapshot.child('title').val()}</p>
+                        <p id="description" class="card-text text-justify">${childSnapshot.child('description').val()}</p>`
 
-                    if (!childSnapshot.child('task_status').val()) {
-                      content+=`<p> <small class="text-muted">by <span class="card-creator">${firebase.auth().currentUser.displayName}</span></small> </p>
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group w-100">
-                          <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="viewTask('${childSnapshot.key}')">View</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary" onclick="markCompleted('${childSnapshot.key}')">Mark Completed</button>
-                          <button id="button_copy_link_${childSnapshot.key}" type="button" class="btn btn-sm btn-outline-secondary" data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${childSnapshot.key}','${childSnapshot.val()}')">Copy Link</button>
-                        </div>`
-                    } else {  
-                      content+=`
-                        <p> <small class="text-muted">by <span class="card-creator">${firebase.auth().currentUser.displayName}</span></small> </p>
-                        <div class="d-flex justify-content-between align-items-center">
-                          <div class="btn-group w-100">
-                            <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="viewTask('${childSnapshot.key}')">View</button>
-                          </div>`
-                    } 
-                     
-                      
-                      content+=`</div>
-                    </div>
-                  </div>
-                </div>`
-                populate_tasks.innerHTML = data
-                //reverseUL('populate_tasks')
-                $(".animated").addClass("delay-1s");
+                        if (!childSnapshot.child('task_status').val()) {
+                          content+=`<p> <small class="text-muted">by <span class="card-creator">${firebase.auth().currentUser.displayName}</span></small> </p>
+                          <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group w-100">
+                              <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="viewTask('${childSnapshot.key}')">View</button>
+                              <button type="button" class="btn btn-sm btn-outline-secondary" onclick="markCompleted('${childSnapshot.key}')">Mark Completed</button>
+                              <button id="button_copy_link_${childSnapshot.key}" type="button" class="btn btn-sm btn-outline-secondary" data-clipboard-text="https://todotaskers.web.app/shared-task.html?task=${childSnapshot.key}" onclick="shareTask('${childSnapshot.key}','${childSnapshot.val()}')">Copy Link</button>
+                            </div>`
+                        } else {  
+                          content+=`
+                            <p> <small class="text-muted">by <span class="card-creator">${firebase.auth().currentUser.displayName}</span></small> </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group w-100">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#exampleModalCenter" onclick="viewTask('${childSnapshot.key}')">View</button>
+                              </div>`
+                        } 
+                        
+                          
+                          content+=`</div>
+                        </div>
+                      </div>
+                    </div>`
+                    populate_tasks.innerHTML = data
+                    //reverseUL('populate_tasks')
+                    $(".animated").addClass("delay-1s");
+
+                }
+
               }
             });
           } else {
@@ -362,10 +366,6 @@ function fetchCompletedTasks() {
                 }
                 console.log(childSnapshot.val());
                 var child_snap = childSnapshot.val();
-                // Your modified getHTML function
-                //const getHTML = message => _.unescape(message).replace('\\', '');
-                var title = childSnapshot.child('title').val().replace(/(<br>|<\/br>|<br \/>)/mgi, "\n");
-                var description = childSnapshot.child('description').val().replace(/(<br>|<\/br>|<br \/>)/mgi, "\n");
                 var random = makeid(10)
                 var randomID_dropdown = makeid(10)
                 data += `<li class="list-group-item m-1 rounded" id="${childSnapshot.key}_li">
